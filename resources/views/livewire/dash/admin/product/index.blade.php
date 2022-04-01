@@ -153,7 +153,7 @@
                         @endforeach
                     </td>
                     <td>
-                        <img src="{{$product->brand->image}}" alt="{{$product->brand->name}} logo" style="height: 3em;">
+                        <img src="{{asset('storage'.$product->brand->image)}}" alt="{{$product->brand->name}} logo" style="height: 3em;">
                     </td>
                     <td>
                         @foreach ($product->categories as $ctg)

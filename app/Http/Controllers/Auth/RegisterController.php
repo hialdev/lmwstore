@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Page;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -38,6 +41,16 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+
+        $seo = Page::all()->keyBy('name');
+        $s_index = $seo->get('register')->meta;
+        SEOTools::setTitle($s_index->title);
+        SEOTools::setDescription($s_index->desc);
+        SEOTools::opengraph()->setUrl(Request::url());
+        SEOTools::setCanonical(Request::url());
+        SEOTools::opengraph()->addProperty('type', $s_index->type);
+        SEOTools::twitter()->setSite($s_index->title);
+        SEOTools::jsonLd()->addImage(asset('storage'.$s_index->image));
     }
 
     /**

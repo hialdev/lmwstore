@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBanksTable extends Migration
+class CreateFooterLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBanksTable extends Migration
      */
     public function up()
     {
-        Schema::create('banks', function (Blueprint $table) {
+        Schema::create('footer_links', function (Blueprint $table) {
             $table->id();
-            $table->string('logo');
-            $table->string('bank');
-            $table->bigInteger('rek');
-            $table->string('name');
+            $table->integer('id_footer');
+            $table->string('foot_text');
+            $table->text('foot_url');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateBanksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('banks');
+        Schema::dropIfExists('footer_links');
     }
 }

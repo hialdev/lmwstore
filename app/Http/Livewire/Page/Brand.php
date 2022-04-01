@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Page;
 
 use App\Models\Brand as ModelsBrand;
 use App\Models\Cart;
+use App\Models\Page;
 use App\Models\Product;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,7 @@ use Livewire\Component;
 class Brand extends Component
 {
     public $brand,$sortby,$q,$limit = 12;
-
+    
     public function mount($slug)
     {
         $brand = ModelsBrand::where('slug',$slug)->first();
@@ -47,7 +48,7 @@ class Brand extends Component
         SEOTools::setCanonical(Request::url());
         SEOTools::opengraph()->addProperty('type', 'brand');
         SEOTools::twitter()->setSite('Brand - '.$brand->name);
-        SEOTools::jsonLd()->addImage($brand->image);
+        SEOTools::jsonLd()->addImage(asset('storage'.$brand->image));
     }
 
     public function getProducts()

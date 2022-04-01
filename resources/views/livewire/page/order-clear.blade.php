@@ -64,7 +64,7 @@
                                     @foreach ($details as $detail)
                                     <div class="row align-items-center py-2 border-bottom">
                                         <div class="col-2">
-                                            <img src="{{json_decode($detail->product->image)[0]}}" alt="{{$detail->product->name}}" class="d-block" style="width:4em;height:4em;object-fit:cover">
+                                            <img src="{{asset('storage'.json_decode($detail->product->image)[0])}}" alt="{{$detail->product->name}}" class="d-block" style="width:4em;height:4em;object-fit:cover">
                                         </div>
                                         <div class="col-6">
                                             <strong>{{$detail->product->name}}</strong>

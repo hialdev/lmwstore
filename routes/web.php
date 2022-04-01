@@ -10,6 +10,8 @@ use App\Http\Livewire\Dash\Admin\Contact\Index as ContactIndex;
 use App\Http\Livewire\Dash\Admin\Coupon\Index as CouponIndex;
 use App\Http\Livewire\Dash\Admin\Email\Index as EmailIndex;
 use App\Http\Livewire\Dash\Admin\Faq\Index as FaqIndex;
+use App\Http\Livewire\Dash\Admin\Footer\Link;
+use App\Http\Livewire\Dash\Admin\Footer\Section;
 use App\Http\Livewire\Dash\Admin\Index as AdminIndex;
 use App\Http\Livewire\Dash\Admin\Label\Index as LabelIndex;
 use App\Http\Livewire\Dash\Admin\Page\Index as PageIndex;
@@ -93,6 +95,8 @@ Route::group(['prefix' => 'canting','middleware' => ['role:admin','auth']], func
     Route::redirect('/meta','/page');
     Route::get('/meta/page', PageIndex::class)->name('dash.page');
     Route::get('/meta/seo', SeoIndex::class)->name('dash.seo');
+    Route::get('/footer/section', Section::class)->name('dash.footer.section');
+    Route::get('/footer/link', Link::class)->name('dash.footer.link');
     Route::get('/profile', ProfileIndex::class)->name('dash.profile');
     Route::get('/pengaturan', SettingIndex::class)->name('dash.pengaturan');
 });

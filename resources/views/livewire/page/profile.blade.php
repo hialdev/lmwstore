@@ -1,5 +1,15 @@
 <div>
-    
+    @if (session()->has('failed'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('failed') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @elseif (session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <h2>My Profile</h2>
     <div class="bg-white my-3 rounded-3 p-3">
         <div class="d-flex flex-column flex-md-row align-items-center gap-3 p-3 w-100">
@@ -24,7 +34,11 @@
         <form wire:submit.prevent="updateProfile({{$user->id}})" enctype="multipart/form-data" class="position-relative pt-4">
             <div class="d-flex flex-column flex-md-column flex-lg-row align-items-center gap-4 p-3 w-100">
                 <div>
-                    <img src="{{ isset($image) ? $image->temporaryUrl() : asset('storage/'.$user->image)}}" alt="{{$user->name}} image profile preview" class="rounded-circle d-block mx-auto" id="image-preview" style="width: 12em;height: 12em; object-fit:cover">
+                    @if (isset($image))
+                        <img src="{{ isset($image) ? $image->temporaryUrl() : asset('storage/'.$user->image)}}" alt="{{$user->name}} image profile preview" class="rounded-circle d-block mx-auto" id="image-preview" style="width: 12em;height: 12em; object-fit:cover">
+                    @else
+                        <img src="{{ isset($user->image) ? asset('storage/'.$user->image) : 'https://ui-avatars.com/api/?name='.$user->name.'&background=0D8ABC&color=fff'}}" alt="{{$user->name}} image profile preview" class="rounded-circle d-block mx-auto" id="image-preview" style="width: 12em;height: 12em; object-fit:cover">
+                    @endif
                     
                     <div class="my-3">
                         <input type="file" wire:model="image" id="file-input" class="form-control @error('image') is-invalid @enderror" accept="png,jpg,jpeg">

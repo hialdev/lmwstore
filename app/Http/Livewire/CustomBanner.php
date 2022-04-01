@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\BannerCustom;
 use Livewire\Component;
 
 class CustomBanner extends Component
 {
     public function render()
     {
-        return view('livewire.custom-banner');
+        $banner =  BannerCustom::first();
+        return view('livewire.custom-banner',compact('banner'));
     }
 }

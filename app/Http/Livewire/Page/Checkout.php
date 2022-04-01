@@ -5,8 +5,10 @@ namespace App\Http\Livewire\Page;
 use App\Models\Alamat;
 use App\Models\Cart;
 use App\Models\Coupon;
+use App\Models\Page;
 use App\Models\Pesanan;
 use App\Models\PesananDetail;
+use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -23,21 +25,26 @@ class Checkout extends Component
     public function boot()
     {
         $this->coupon();
+        $this->seo();
         $alm = Alamat::where('id_user',Auth::user()->id)->latest()->take(1)->first();
         if (isset($alm)) {
             $this->select_alamat = $alm->tanda;
         }
     }
-    // public function seo()
-    // {
-    //     SEOTools::setTitle($this->product->name);
-    //     SEOTools::setDescription($this->product->brief);
-    //     SEOTools::opengraph()->setUrl(Request::url());
-    //     SEOTools::setCanonical(Request::url());
-    //     SEOTools::opengraph()->addProperty('type', 'product');
-    //     SEOTools::twitter()->setSite($this->product->name);
-    //     SEOTools::jsonLd()->addImage(json_decode($this->product->image)[0]);
-    // }
+
+    public function seo()
+    {
+        $set = Setting::all()->keyBy('key');
+        $cart = Cart::where('id_user',Auth::id())->first();
+        SEOTools::setTitle('Checkout - LMW Store');
+        SEOTools::setDescription($cart->product->brief);
+        SEOTools::opengraph()->setUrl(Request::url());
+        SEOTools::setCanonical(Request::url());
+        SEOTools::opengraph()->addProperty('type', 'page');
+        SEOTools::twitter()->setSite('Checkout - LMW Store');
+        SEOTools::jsonLd()->addImage(asset('storage'.json_decode($cart->product->image)[0]));
+    }
+
     public function render()
     {
         // $this->seo();
@@ -93,7 +100,7 @@ class Checkout extends Component
         ]);
 
         if ($alamat) {
-            session()->flash('success','Berhasil menambah alamat penerima.');
+            redirect()->route('checkout')->with('success','Berhasil menambah alamat penerima.');
         }else{
             session()->flash('failed','Gagal menambah alamat penerima.');
         }

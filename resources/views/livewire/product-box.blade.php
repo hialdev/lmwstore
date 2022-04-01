@@ -45,8 +45,8 @@
                             <span class="product-label label-new" style="background-color: {{$product->label->bg_color}} !important">{{$product->label->name}}</span>
                             
                             <a href="{{$product->id}}">
-                                <img src="{{$images[0]}}" alt="Product image" class="product-image">
-                                <img src="{{$images[1]}}" alt="Product image" class="product-image-hover">
+                                <img src="{{asset('storage'.$images[0])}}" alt="Product image" class="product-image">
+                                <img src="{{asset('storage'.$images[1])}}" alt="Product image" class="product-image-hover">
                             </a>
                         </figure><!-- End .product-media -->
 
@@ -60,14 +60,8 @@
                             <div class="product-price">
                                 {{Helper::rupiah($product->price)}}
                             </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 0 )</span>
-                            </div><!-- End .rating-container -->
                             <div style="max-width: 6em;">
-                                <img src="{{$product->brand->image}}" alt="{{$product->brand->name}}" class="w-100">
+                                <img src="{{asset('storage'.$product->brand->image)}}" alt="{{$product->brand->name}}" class="w-100">
                             </div>
                         </div><!-- End .product-body -->
                     </div><!-- End .product -->

@@ -6,46 +6,29 @@
                 <div class="row">
                     <div class="col-sm-6 col-lg-4">
                         <div class="widget widget-about">
-                            <img src="/assets/images/lmw-logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
-                            <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+                            <img src="{{$setting->get('logo_site') !== null? asset('storage'.$setting->get('logo_site')->content) :'/assets/images/lmw-logo.png'}}" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                            <p>{{$setting->get('desc_site')->content}}</p>
 
                             <div class="social-icons">
-                                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-                                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
-                                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
-                                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
-                                <a href="#" class="social-icon" target="_blank" title="Pinterest"><i class="icon-pinterest"></i></a>
+                                @foreach ($contacts as $c) 
+                                    <a href="{{$c->url}}" class="social-icon" target="_blank" title="{{$c->platform}}"><span class="iconify" data-icon="{{$c->icon}}"></span></a>
+                                @endforeach
                             </div><!-- End .soial-icons -->
                         </div><!-- End .widget about-widget -->
                     </div><!-- End .col-sm-6 col-lg-3 -->
-
+                    @foreach ($footers as $foot)  
                     <div class="col-sm-6 col-lg-4">
                         <div class="widget">
-                            <h4 class="widget-title text-dark">Useful Links</h4><!-- End .widget-title -->
-
+                            <h4 class="widget-title text-dark">{{$foot->section}}</h4><!-- End .widget-title -->
+                            
                             <ul class="widget-list">
-                                <li><a href="http://langgengmakmurwijaya.com/">About LMW</a></li>
-                                <li><a href="{{route('product')}}">Shop Now!</a></li>
-                                <li><a href="{{route('faq')}}">FAQ</a></li>
-                                <li><a href="{{route('contact')}}">Contact us</a></li>
-                                <li><a href="{{route('login')}}">Log in</a></li>
+                                @foreach ($foot->footer as $f)
+                                <li><a href="{{url($f->foot_url)}}">{{$f->foot_text}}</a></li>
+                                @endforeach
                             </ul><!-- End .widget-list -->
                         </div><!-- End .widget -->
                     </div><!-- End .col-sm-6 col-lg-3 -->
-
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="widget">
-                            <h4 class="widget-title text-dark">My Account</h4><!-- End .widget-title -->
-
-                            <ul class="widget-list">
-                                <li><a href="{{route('login')}}">Sign In</a></li>
-                                <li><a href="{{route('cart')}}">View Cart</a></li>
-                                <li><a href="{{route('order.pending')}}">Track My Order</a></li>
-                                <li><a href="{{route('order.sukses')}}">My Success Order</a></li>
-                                <li><a href="{{route('contact')}}">Help</a></li>
-                            </ul><!-- End .widget-list -->
-                        </div><!-- End .widget -->
-                    </div><!-- End .col-sm-6 col-lg-3 -->
+                    @endforeach
                 </div><!-- End .row -->
             </div><!-- End .container -->
         </div><!-- End .footer-middle -->

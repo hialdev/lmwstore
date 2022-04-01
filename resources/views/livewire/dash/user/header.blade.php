@@ -1,9 +1,12 @@
 <div>
+    @php
+        $set = \App\Models\Setting::all()->keyBy('key');
+    @endphp
     <header class="mb-5">
         <div class="header-top">
             <div class="container">
                 <div class="logo">
-                    <a href="{{route('home')}}"><img src="/assets/images/lmw-logo.png" alt="Logo" style="height: 4em"></a>
+                    <a href="{{route('home')}}"><img src="{{$set->get('logo_site') !== null? asset('storage'.$set->get('logo_site')->content) :'/assets/images/lmw-logo.png'}}" alt="Logo" style="height: 4em"></a>
                 </div>
                 <div class="header-top-right">
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vertical Navbar - Mazer Admin Dashboard</title>
+    <title>Ruangan Admin - LMW Store</title>
     
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -12,7 +12,19 @@
     <link rel="stylesheet" href="/dashboard/assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
     <link rel="stylesheet" href="/dashboard/assets/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="/dashboard/assets/css/app.css">
-    <link rel="shortcut icon" href="/dashboard/assets/images/favicon.svg" type="image/x-icon">
+    <meta name="csrf-token" content="{{csrf_token()}}">
+
+    <!-- Favicon -->
+    @php
+        $set = \App\Models\Setting::all()->keyBy('key');
+    @endphp
+    <link rel="apple-touch-icon" sizes="180x180" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content) : '/assets/images/lmw-logo.png'}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content) : '/assets/images/lmw-logo.png'}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content) : '/assets/images/lmw-logo.png'}}">
+    <link rel="shortcut icon" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content): '/assets/images/lmw-logo.png'}}">
+    <meta name="apple-mobile-web-app-title" content="LMW Store">
+    <meta name="application-name" content="LMW Store">
+
     <style>
         .no-arrow::-webkit-outer-spin-button,
         .no-arrow::-webkit-inner-spin-button {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Page;
 
+use App\Models\Page;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
@@ -10,13 +11,15 @@ class Index extends Component
 {
     public function mount()
     {
-        SEOTools::setTitle('LMW Store - Fashion Batik Betawi Terbaik');
-        SEOTools::setDescription('This is my page description');
+        $seo = Page::all()->keyBy('name');
+        $s_index = $seo->get('home')->meta;
+        SEOTools::setTitle($s_index->title);
+        SEOTools::setDescription($s_index->desc);
         SEOTools::opengraph()->setUrl(Request::url());
         SEOTools::setCanonical(Request::url());
-        SEOTools::opengraph()->addProperty('type', 'pages');
-        SEOTools::twitter()->setSite('LMW Store - Fashion Batik Betawi Terbaik');
-        SEOTools::jsonLd()->addImage('https://codecasts.com.br/img/logo.jpg');
+        SEOTools::opengraph()->addProperty('type', $s_index->type);
+        SEOTools::twitter()->setSite($s_index->title);
+        SEOTools::jsonLd()->addImage(asset('storage'.$s_index->image));
     }
     public function render()
     {

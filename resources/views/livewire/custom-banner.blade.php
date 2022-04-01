@@ -2,15 +2,15 @@
     <div class="col-12">
         <div class="banner banner-big">
             <a href="#">
-                <img src="/assets/images/banners/banner-fullwidth.jpg" alt="Banner">
+                <img src="{{asset('storage'.$banner->image)}}" alt="{{$banner->title}} Banner" style="max-height: 30em;object-fit:cover">
             </a>
 
-            <div class="banner-content">
-                <h4 class="banner-subtitle text-primary">CUSTOMABLE</h4><!-- End .banner-subtitle -->
-                <h3 class="banner-title text-white">Pilih Model, Pilih Motif Sendiri!</h3><!-- End .banner-title -->
-                <p class="d-none d-lg-block">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, posuere a, pede.</p> 
+            <div class="banner-content" style="left: auto;margin-left:5%;">
+                <h4 class="banner-subtitle text-primary">{{$banner->subtitle}}</h4><!-- End .banner-subtitle -->
+                <h3 class="banner-title text-white">{{$banner->title}}</h3><!-- End .banner-title -->
+                <p class="d-none d-lg-block">{{$banner->desc}}</p> 
 
-                <a href="#" class="btn btn-primary btn-rounded"><span>Pesan Custom Exclusive</span><i class="icon-long-arrow-right"></i></a>
+                <a href="{{$banner->url}}" class="btn btn-primary btn-rounded"><span>{{$banner->btn_text}}</span><i class="icon-long-arrow-right"></i></a>
             </div><!-- End .banner-content -->
         </div><!-- End .banner -->
     </div><!-- End .col-12 -->

@@ -2,7 +2,7 @@
 
     <div class="page-content border-0">
         <div class="border-0 bg-white">
-            <iframe id="map" class="mb-5" style="width: 100%;border:0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.51252896939!2d106.88925711536972!3d-6.195903262426719!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4bfa036c11b%3A0xce36f6058e6d20ea!2sJl.%20Paus%20No.90%2C%20RT.1%2FRW.8%2C%20Jati%2C%20Kec.%20Pulo%20Gadung%2C%20Kota%20Jakarta%20Timur%2C%20Daerah%20Khusus%20Ibukota%20Jakarta%2013220!5e0!3m2!1sen!2sid!4v1646622680776!5m2!1sen!2sid" allowfullscreen="" loading="lazy"></iframe>
+            <iframe id="map" class="mb-5" style="width: 100%;border:0" src="{{$setting->get('gmaps')->content}}" allowfullscreen="" loading="lazy"></iframe>
         </div><!-- End #map -->
         <div class="container">
             <div class="row">
@@ -10,7 +10,7 @@
                     <div class="contact-box text-center">
                         <h3>Office</h3>
 
-                        <address>1 New York Plaza, New York, <br>NY 10004, USA</address>
+                        <address>{{$setting->get('address')->content}}</address>
                     </div><!-- End .contact-box -->
                 </div><!-- End .col-md-4 -->
 
@@ -18,22 +18,22 @@
                     <div class="contact-box text-center">
                         <h3>Start a Conversation</h3>
 
-                        <div><a href="mailto:#">info@Molla.com</a></div>
-                        <div><a href="tel:#">+1 987-876-6543</a>, <a href="tel:#">+1 987-976-1234</a></div>
+                        <div class="social-icons d-flex justify-content-center">
+                            @foreach ($contacts as $c) 
+                                <a href="{{$c->url}}" class="social-icon" target="_blank" title="{{$c->platform}}"><span class="iconify" data-icon="{{$c->icon}}"></span></a>
+                            @endforeach
+                        </div><!-- End .soial-icons -->
                     </div><!-- End .contact-box -->
                 </div><!-- End .col-md-4 -->
 
                 <div class="col-md-4">
                     <div class="contact-box text-center">
-                        <h3>Social</h3>
+                        <h3>Direct Chat</h3>
 
-                        <div class="social-icons social-icons-color justify-content-center">
-                            <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                            <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                            <a href="#" class="social-icon social-instagram" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                            <a href="#" class="social-icon social-youtube" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-                            <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
-                        </div><!-- End .soial-icons -->
+                        <div class="d-inline-flex align-items-center p-4 border rounded">
+                            <span class="iconify text-primary" data-icon="bi:whatsapp" style="width: 3em; height:3em;"></span>
+                            <a href="" class="ml-3 btn btn-primary text-white">Chat Via WhatsApp</a>
+                        </div>
                     </div><!-- End .contact-box -->
                 </div><!-- End .col-md-4 -->
             </div><!-- End .row -->

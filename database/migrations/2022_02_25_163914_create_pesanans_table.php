@@ -23,7 +23,7 @@ class CreatePesanansTable extends Migration
             $table->integer('kode_uniq');
             $table->integer('tax');
             $table->integer('sum_price');
-            $table->boolean('status');
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }

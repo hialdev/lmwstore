@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class FooterSection extends Model
 {
     use HasFactory;
-
-    public function meta()
+    public function footer()
     {
-        return $this->hasOne(Meta::class,'id_page');
+        return $this->hasMany(FooterLink::class,'id_footer');
     }
 }

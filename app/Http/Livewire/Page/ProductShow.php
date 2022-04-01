@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Page;
 use App\Helpers\Helper;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Setting;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -43,6 +44,10 @@ class ProductShow extends Component
     }
     public function addCart($id)
     {
+        $this->validate([
+            'variant' => 'required',
+            'size' => 'required',
+        ]);
         if (isset(Auth::user()->id)) {
             $uid = Auth::user()->id;
             $check = Cart::where('id_user',$uid)->where('id_product',$id)->first();
@@ -102,11 +107,13 @@ class ProductShow extends Component
     {
         if (isset(Auth::user()->id)) {
             $name = Auth::user()->name; 
-            $this->wa = "https://wa.me/6289671052050?text=Hallo+LMW+Store%2C%0D%0ASaya+".$name."%2C+ingin+membeli+product+dengan+keterangan+sebagai+berikut%3A%0D%0A%0D%0AProduct+%3A+".$this->product->name."%0D%0AQty+%3A+".$this->qty."%0D%0AHarga+%3A+".Helper::rupiah($this->product->price-($this->product->price*$this->product->discount/100))."%0D%0AHarga+Asli+%3A+".Helper::rupiah($this->product->price)."%0D%0AVariant+%3A+".$this->variant."%0D%0ASize+%3A+".$this->size."%0D%0A%0D%0ATerimakasih.";
+            $setting = Setting::all()->keyBy('key');
+            $wa = $setting->get('wa_admin')->content;
+            $this->wa = "https://wa.me/$wa?text=Hallo+LMW+Store%2C%0D%0ASaya+".$name."%2C+ingin+membeli+product+dengan+keterangan+sebagai+berikut%3A%0D%0A%0D%0AProduct+%3A+".$this->product->name."%0D%0AQty+%3A+".$this->qty."%0D%0AHarga+%3A+".Helper::rupiah($this->product->price-($this->product->price*$this->product->discount/100))."%0D%0AHarga+Asli+%3A+".Helper::rupiah($this->product->price)."%0D%0AVariant+%3A+".$this->variant."%0D%0ASize+%3A+".$this->size."%0D%0A%0D%0ATerimakasih.";
 
             redirect()->away($this->wa);
         }else{
-            $this->wa = "https://wa.me/6289671052050?text=Hallo+LMW+Store%2C%0D%0ASaya+"."*Nama Anda*"."%2C+ingin+membeli+product+dengan+keterangan+sebagai+berikut%3A%0D%0A%0D%0AProduct+%3A+".$this->product->name."%0D%0AQty+%3A+".$this->qty."%0D%0AHarga+Promo+%3A+".Helper::rupiah($this->product->price-($this->product->price*$this->product->discount/100))."%0D%0AHarga+Asli+%3A+".Helper::rupiah($this->product->price)."%0D%0AVariant+%3A+".$this->variant."%0D%0ASize+%3A+".$this->size."%0D%0A%0D%0ATerimakasih.";
+            $this->wa = "https://wa.me/$wa?text=Hallo+LMW+Store%2C%0D%0ASaya+"."*Nama Anda*"."%2C+ingin+membeli+product+dengan+keterangan+sebagai+berikut%3A%0D%0A%0D%0AProduct+%3A+".$this->product->name."%0D%0AQty+%3A+".$this->qty."%0D%0AHarga+Promo+%3A+".Helper::rupiah($this->product->price-($this->product->price*$this->product->discount/100))."%0D%0AHarga+Asli+%3A+".Helper::rupiah($this->product->price)."%0D%0AVariant+%3A+".$this->variant."%0D%0ASize+%3A+".$this->size."%0D%0A%0D%0ATerimakasih.";
             redirect()->away($this->wa);
         }
     }

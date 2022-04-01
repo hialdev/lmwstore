@@ -21,10 +21,10 @@ class CartView extends Component
     {
         session()->forget('coupon');
         session()->save();
+        $this->seo();
     }
     public function render()
     {
-        $this->seo();
         $data = $this->cartData();
         $cpn = Coupon::where('code',$this->coupon)->first();
         if ($cpn !== null && $this->cpn_sale > $cpn->max) {
@@ -32,6 +32,7 @@ class CartView extends Component
         }else{
             $sum_cpn = $data['total']-$this->cpn_sale;
         }
+
         return view('livewire.page.cart-view',[
             'cart' => $data,
             'total' => $data['total'],
@@ -51,7 +52,7 @@ class CartView extends Component
         SEOTools::setCanonical(Request::url());
         SEOTools::opengraph()->addProperty('type', 'pages');
         SEOTools::twitter()->setSite('View Cart - LMW Store');
-        SEOTools::jsonLd()->addImage(isset($cart->product) ? json_decode($cart->product->image)[0] : '/assets/images/lmw-logo.png');
+        SEOTools::jsonLd()->addImage(isset($cart->product) ? asset('storage'.json_decode($cart->product->image)[0]) : '/assets/images/lmw-logo.png');
     }
     //Mengambil data keranjang
     public function cartData()

@@ -2,9 +2,12 @@
 
 namespace App\Http\Livewire\Page;
 
+use App\Models\Page;
 use App\Models\User;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -19,6 +22,20 @@ class Profile extends Component
     public function boot()
     {
         $this->setup();
+        $this->seo();
+    }
+
+    public function seo()
+    {
+        $seo = Page::all()->keyBy('name');
+        $s_index = $seo->get('profile')->meta;
+        SEOTools::setTitle($s_index->title);
+        SEOTools::setDescription($s_index->desc);
+        SEOTools::opengraph()->setUrl(Request::url());
+        SEOTools::setCanonical(Request::url());
+        SEOTools::opengraph()->addProperty('type', $s_index->type);
+        SEOTools::twitter()->setSite($s_index->title);
+        SEOTools::jsonLd()->addImage(asset('storage'.$s_index->image));
     }
 
     public function render()
@@ -85,8 +102,8 @@ class Profile extends Component
         }else{
             session()->flash('failed','Maaf, gagal memperbarui profil.');
         }
-
         $this->emit('profileUpdate');
+        $this->close();
     }
 
     public function updatePassword($id)

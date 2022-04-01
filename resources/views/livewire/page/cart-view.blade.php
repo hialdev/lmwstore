@@ -48,7 +48,7 @@
                                         <div class="product">
                                             <figure class="product-media">
                                                 <a href="{{route('product.show',$cart->product->slug)}}">
-                                                    <img src="{{json_decode($cart->product->image)[0]}}" alt="{{$cart->product->name}} image">
+                                                    <img src="{{asset('storage'.json_decode($cart->product->image)[0])}}" alt="{{$cart->product->name}} image">
                                                 </a>
                                             </figure>
 
@@ -96,7 +96,7 @@
                                     </div><!-- End .input-group -->
                                 </form>
                                 @if ($cpnData)
-                                    <small class="text-dark">Berhasil mendapatkan coupon potongan {{$cpnData->discount.'%'}} (max. {{Helper::rupiah($cpnData->max)}})</small>
+                                    <small class="text-dark">Berhasil mendapatkan coupon potongan {{$cpnData->discount.'%'}} (max. {{Helper::rupiah($cpnData->max)}}), Silahkan apply untuk menerapkan coupon.</small>
                                 @endif
                             </div><!-- End .cart-discount -->
                         </div><!-- End .cart-bottom -->

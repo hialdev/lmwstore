@@ -20,7 +20,8 @@
             @endfor
 
         </div><!-- End .row -->
-        
+    @endif
+    @if (count($banners) > 2)        
         <div class="row justify-content-center">
             @for ($i=2;$i<5;$i++)
             <div class="col-md-6 col-lg-4">

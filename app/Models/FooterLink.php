@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Page extends Model
+class FooterLink extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
-    public function meta()
+    public function section()
     {
-        return $this->hasOne(Meta::class,'id_page');
+        return $this->belongsTo(FooterSection::class,'id_footer');
     }
 }

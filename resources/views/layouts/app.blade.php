@@ -12,10 +12,13 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/lmw-logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/lmw-logo.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/lmw-logo.png">
-    <link rel="shortcut icon" href="/assets/images/lmw-logo.png">
+    @php
+        $set = \App\Models\Setting::all()->keyBy('key');
+    @endphp
+    <link rel="apple-touch-icon" sizes="180x180" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content) : '/assets/images/lmw-logo.png'}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content) : '/assets/images/lmw-logo.png'}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content) : '/assets/images/lmw-logo.png'}}">
+    <link rel="shortcut icon" href="{{$set->get('logo_favicon') !== null ? asset('storage'.$set->get('logo_favicon')->content): '/assets/images/lmw-logo.png'}}">
     <meta name="apple-mobile-web-app-title" content="LMW Store">
     <meta name="application-name" content="LMW Store">
 

@@ -70,14 +70,8 @@
                                     <span class="old-price">{{Helper::rupiah($product->price)}}</span>
                                 @endif
                             </div><!-- End .product-price -->
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <span class="ratings-text">( 0 )</span>
-                            </div><!-- End .rating-container -->
                             <div style="max-width: 6em;">
-                                <img src="{{$product->brand->image}}" alt="{{$product->brand->name}}" class="w-100">
+                                <img src="{{asset('storage'.$product->brand->image)}}" alt="{{$product->brand->name}}" class="w-100">
                             </div>
                         </div><!-- End .product-body -->
                     </div><!-- End .product -->

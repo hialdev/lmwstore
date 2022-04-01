@@ -19,6 +19,7 @@ class CreateContactsTable extends Migration
             $table->string('icon');
             $table->string('contact');
             $table->string('name')->nullable();
+            $table->text('url')->nullable();
             $table->timestamps();
         });
     }

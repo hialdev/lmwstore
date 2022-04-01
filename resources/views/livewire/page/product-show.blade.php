@@ -50,7 +50,7 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" src="{{json_decode($product->image)[0]}}" data-zoom-image="{{json_decode($product->image)[0]}}" alt="{{$product->name}} image">
+                                    <img id="product-zoom" src="{{asset('storage'.json_decode($product->image)[0])}}" data-zoom-image="{{asset('storage'.json_decode($product->image)[0])}}" alt="{{$product->name}} image">
 
                                     <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                         <i class="icon-arrows"></i>
@@ -59,8 +59,8 @@
 
                                 <div id="product-zoom-gallery" class="product-image-gallery position-relative" style="position: relative;">
                                     @foreach (json_decode($product->image) as $index=>$image)
-                                        <a class="product-gallery-item {{$index === 0 ? 'active':''}}" href="#" data-image="{{$image}}" data-zoom-image="{{$image}}">
-                                            <img src="{{$image}}" alt="{{$product->name}} image">
+                                        <a class="product-gallery-item {{$index === 0 ? 'active':''}}" href="#" data-image="{{asset('storage'.$image)}}" data-zoom-image="{{asset('storage'.$image)}}">
+                                            <img src="{{asset('storage'.$image)}}" alt="{{$product->name}} image">
                                         </a>
                                     @endforeach
                                 </div><!-- End .product-image-gallery -->
@@ -71,14 +71,9 @@
                     <div class="col-md-6">
                         <div class="product-details">
                             <h1 class="product-title">{{ $product->name }}</h1><!-- End .product-title -->
-
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                            </div><!-- End .rating-container -->
-
+                            @if ($product->preorder === 1)
+                                <div class="my-2"><span class="p-1 rounded px-2 text-white bg-success">Preorder</span></div>
+                            @endif
                             <div class="product-price">
                                 <span class="new-price">{{Helper::rupiah(($product->discount !== 0 && $product->discount !== null) ? $product->price - $product->price*$product->discount/100 : $product->price)}}</span>
                                 @if ($product->discount !== 0 && $product->discount !== null)
@@ -87,7 +82,7 @@
                             </div><!-- End .product-price -->
 
                             <div class="product-content">
-                                <img src="{{$product->brand->image}}" alt="{{$product->brand->name}} brand" class="d-block" style="max-height:4em;">
+                                <img src="{{asset('storage'.$product->brand->image)}}" alt="{{$product->brand->name}} brand" class="d-block" style="max-height:4em;">
                                 <p>{{$product->brief}}</p>
                             </div><!-- End .product-content -->
 
@@ -100,6 +95,7 @@
                                         <option value="{{$variant}}">{{$variant}}</option>
                                         @endforeach
                                     </select>
+                                    @error('variant') <small class="text-danger">{{$message}}</small> @enderror
                                 </div><!-- End .select-custom -->
 
                                 <label for="size">Size:</label>
@@ -110,11 +106,16 @@
                                             <option value="{{$size}}">{{$size}}</option>
                                         @endforeach
                                     </select>
+                                    @error('variant') <small class="text-danger">{{$message}}</small> @enderror
                                 </div><!-- End .select-custom -->
                             </div><!-- End .details-filter-row -->
-
+                            
                             <div class="details-filter-row details-row-size">
-                                <label for="qty">Qty:</label>
+                                @if ($product->preorder === 1)
+                                    <label for="qty">Qty Preorder:</label>
+                                @else
+                                    <label for="qty">Qty:</label>
+                                @endif
                                 <div class="product-details-quantity">
                                     <input wire:model="qty" type="number" class="form-control" value="1" min="1" max="{{$product->stock}}" step="1" data-decimals="0" required>
                                 </div><!-- End .product-details-quantity -->
@@ -155,71 +156,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
-                    </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel" aria-labelledby="product-desc-link">
                         <div class="product-desc-content">
                             {!! $product->desc   !!}
                         </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane -->
-                    <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
-                        <div class="reviews">
-                            <h3>Reviews (2)</h3>
-                            <div class="review">
-                                <div class="row no-gutters">
-                                    <div class="col-auto">
-                                        <h4><a href="#">Samanta J.</a></h4>
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                        </div><!-- End .rating-container -->
-                                        <span class="review-date">6 days ago</span>
-                                    </div><!-- End .col -->
-                                    <div class="col">
-                                        <h4>Good, perfect size</h4>
-
-                                        <div class="review-content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores assumenda asperiores facilis porro reprehenderit animi culpa atque blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit beatae quae voluptas!</p>
-                                        </div><!-- End .review-content -->
-
-                                        <div class="review-action">
-                                            <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                            <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                        </div><!-- End .review-action -->
-                                    </div><!-- End .col-auto -->
-                                </div><!-- End .row -->
-                            </div><!-- End .review -->
-
-                            <div class="review">
-                                <div class="row no-gutters">
-                                    <div class="col-auto">
-                                        <h4><a href="#">John Doe</a></h4>
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                        </div><!-- End .rating-container -->
-                                        <span class="review-date">5 days ago</span>
-                                    </div><!-- End .col -->
-                                    <div class="col">
-                                        <h4>Very good</h4>
-
-                                        <div class="review-content">
-                                            <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas iure illum repellendus, blanditiis perspiciatis beatae!</p>
-                                        </div><!-- End .review-content -->
-
-                                        <div class="review-action">
-                                            <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                                            <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                        </div><!-- End .review-action -->
-                                    </div><!-- End .col-auto -->
-                                </div><!-- End .row -->
-                            </div><!-- End .review -->
-                        </div><!-- End .reviews -->
                     </div><!-- .End .tab-pane -->
                 </div><!-- End .tab-content -->
             </div><!-- End .product-details-tab -->
@@ -256,9 +198,12 @@
                 <div class="product">
                     <figure class="product-media">
                         <span class="product-label label-new" style="background-color: {{$product->label->bg_color}} !important">{{$product->label->name}}</span>
+                        @if ($product->discount !== null && $product->discount !== 0)
+                            <span class="product-label label-new bg-primary">-{{$product->discount}}%</span>
+                        @endif
                         <a href="{{route('product.show',$product->slug)}}">
-                            <img src="{{json_decode($product->image)[0]}}" alt="Product image" class="product-image">
-                            <img src="{{json_decode($product->image)[1]}}" alt="Product image" class="product-image-hover">
+                            <img src="{{asset('storage'.json_decode($product->image)[0])}}" alt="Product image" class="product-image">
+                            <img src="{{asset('storage'.json_decode($product->image)[1])}}" alt="Product image" class="product-image-hover">
                         </a>
                     </figure><!-- End .product-media -->
 
@@ -275,14 +220,8 @@
                                 <span class="old-price">{{Helper::rupiah($product->price)}}</span>
                             @endif
                         </div><!-- End .product-price -->
-                        <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <span class="ratings-text">( 0 )</span>
-                        </div><!-- End .rating-container -->
                         <div style="max-width: 6em;">
-                            <img src="{{$product->brand->image}}" alt="{{$product->name}}" class="w-100">
+                            <img src="{{asset('storage'.$product->brand->image)}}" alt="{{$product->brand->name}}" class="w-100">
                         </div>
                     </div><!-- End .product-body -->
                 </div><!-- End .product -->

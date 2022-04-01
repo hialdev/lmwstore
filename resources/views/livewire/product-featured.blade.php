@@ -46,18 +46,15 @@
                             @endforeach
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="{{route('product.show',$product->slug)}}">{{$product->name}}</a></h3><!-- End .product-title -->
+                        @if ($product->preorder === 1)
+                            <div class="my-2"><span class="p-1 rounded px-2 text-white bg-success">Preorder</span></div>
+                        @endif
                         <div class="product-price">
                             <span class="new-price">{{Helper::rupiah(($product->discount !== 0 && $product->discount !== null) ? $product->price - $product->price*$product->discount/100 : $product->price)}}</span>
                             @if ($product->discount !== 0 && $product->discount !== null)
                                 <span class="old-price">{{Helper::rupiah($product->price)}}</span>
                             @endif
                         </div><!-- End .product-price -->
-                        <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <span class="ratings-text">( 0 )</span>
-                        </div><!-- End .rating-container -->
                         <div style="max-width: 6em;">
                             <img src="{{asset('storage'.$product->brand->image)}}" alt="{{$product->name}}" class="w-100">
                         </div>

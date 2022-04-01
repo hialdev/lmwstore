@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Page;
 
+use App\Models\Contact as ModelsContact;
 use App\Models\Email;
+use App\Models\Setting;
 use Livewire\Component;
 
 class Contact extends Component
@@ -19,7 +21,9 @@ class Contact extends Component
 
     public function render()
     {
-        return view('livewire.page.contact');
+        $contacts = ModelsContact::all();
+        $setting = Setting::all()->keyBy('key');
+        return view('livewire.page.contact',compact('contacts','setting'));
     }
 
     public function sendEmail()

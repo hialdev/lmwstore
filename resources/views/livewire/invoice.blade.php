@@ -20,43 +20,26 @@
                 <p>Bayar pesanan dengan Harga : <br>(harus tepat dan sesuai)</p>
                 <h1>{{Helper::rupiah($pesanan->sum_price)}}</h1>
                 <p>Bayar sebelum :</p>
-                <h5>{{$pesanan->created_at->addDays(1)->isoFormat('dddd, D MMM Y')}}</h5>
-                <button wire:click="confirm" class="btn btn-primary" {{$pesanan->status === 0 ? '' : 'disabled'}}>Konfirmasi Pembayaran</button>
+                <h5>{{$pesanan->created_at->addDays(2)->isoFormat('dddd, D MMM Y H:m:s')}}</h5>
+                <button wire:click="confirm({{$pesanan->id}})" class="btn btn-primary" {{$pesanan->status === 0 ? '' : 'disabled'}}>Konfirmasi Pembayaran</button>
                 <hr>
                 <p>Rekening Pembayaran yang tersedia:</p>
                 <div class="w-100 mx-auto my-4" style="max-width: 35em">
                     <table class="table">
+                        @foreach ($banks as $bank)
                         <tr>
                             <td>
-                                <img src="/assets/images/bank/bca-logo.jpg" alt="" class="d-block" style="max-height: 4em;">
+                                <img src="{{asset('storage'.$bank->logo)}}" alt="{{$bank->name}}" class="d-block" style="max-height: 4em;">
                             </td>
                             <td class="text-left">
-                                <h6 class="m-0">BCA</h6>
-                                <h4 class="m-0">8172398642</h4>
-                                <p>PT. Langgeng Makmur Wijaya</p>
+                                <h6 class="m-0">{{$bank->bank}}</h6>
+                                <h4 class="m-0">{{$bank->rek}}</h4>
+                                <p>{{$bank->name}}</p>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <img src="/assets/images/bank/bni-logo.png" alt="" class="d-block" style="max-height: 4em;">
-                            </td>
-                            <td class="text-left">
-                                <h6 class="m-0">BNI</h6>
-                                <h4 class="m-0">8172398642</h4>
-                                <p>PT. Langgeng Makmur Wijaya</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/assets/images/bank/bsi-logo.png" alt="" class="d-block" style="max-height: 4em;">
-                            </td>
-                            <td class="text-left">
-                                <h6 class="m-0">BSI</h6>
-                                <h4 class="m-0">8172398642</h4>
-                                <p>PT. Langgeng Makmur Wijaya</p>
-                            </td>
-                        </tr>
+                        @endforeach
                     </table>
+                    <a href="https://wa.me/{{\App\Models\Setting::where('key','wa_admin')->first()->content;}}" class="btn btn-outline-primary">Chat Admin</a>
                 </div>
             </div>
         </div>
@@ -95,7 +78,7 @@
                     <th scope="row">{{$loop->index}}</th>
                     <td>
                         <div class="d-flex p-3" style="gap:1em;">
-                            <img src="{{json_decode($pd->product->image)[0]}}" alt="{{$pd->product->name}}" class="d-block" style="width: 4em;height:4em;">
+                            <img src="{{asset('storage'.json_decode($pd->product->image)[0])}}" alt="{{$pd->product->name}}" class="d-block" style="width: 4em;height:4em;">
                             <div>
                                 <p>{{$pd->product->name}}</p>
                                 <p>{{json_decode($pd->detail)->size.' - '.json_decode($pd->detail)->variant}}</p>

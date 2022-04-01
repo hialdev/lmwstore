@@ -16,7 +16,8 @@ class CreatePesananDetailsTable extends Migration
         Schema::create('pesanan_details', function (Blueprint $table) {
             $table->id();
             $table->integer('id_pesanan');
-            $table->integer('id_product');
+            $table->string('p_name');
+            $table->integer('p_price');
             $table->string('detail');
             $table->integer('qty');
             $table->timestamps();

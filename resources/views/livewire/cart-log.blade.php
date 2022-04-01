@@ -38,7 +38,7 @@
     
                             <figure class="product-image-container">
                                 <a href="{{route('product.show',$cart->product->slug)}}" class="product-image">
-                                    <img src="{{json_decode($cart->product->image)[0];}}" alt="{{$cart->product->name}}">
+                                    <img src="{{asset('storage'.json_decode($cart->product->image)[0])}}" alt="{{$cart->product->name}}">
                                 </a>
                             </figure>
                             
@@ -95,7 +95,7 @@
                             <span class="iconify mr-3" data-icon="ic:outline-pending-actions" style="width: 2em;height: 2em;"></span>
                             Pesanan Pending
                             @if (count($ppndng) > 0 && $ppndng !== null)
-                                <span class="cart-count">{{$ppndng}}</span>
+                                <span class="cart-count">{{count($ppndng)}}</span>
                             @endif
                         </a><!-- End .product-cart-details -->
                         <a href="{{route('order.sukses')}}" class="text-dark py-4 d-flex align-items-center">

@@ -2,8 +2,11 @@
     <div class="sidebar-wrapper active">
         <div class="sidebar-header">
             <div class="d-flex justify-content-between">
+                @php
+                    $set = \App\Models\Setting::all()->keyBy('key');
+                @endphp
                 <div class="logo">
-                    <a href="{{route('home')}}" target="_blank"><img src="/assets/images/lmw-logo.png" alt="Logo" style="height: 2em"></a>
+                    <a href="{{route('home')}}" target="_blank"><img src="{{$set->get('logo_site') !== null? asset('storage'.$set->get('logo_site')->content) :'/assets/images/lmw-logo.png'}}" alt="Logo" style="height: 2em"></a>
                 </div>
                 <div class="toggler">
                     <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -142,6 +145,21 @@
                         </li>
                         <li class="submenu-item ">
                             <a href="{{route('dash.seo')}}">SEO Metatools</a>
+                        </li>
+                    </ul>
+                </li>
+                <li
+                    class="sidebar-item has-sub {{request()->is('canting/footer*') ? 'active' : ''}}">
+                    <a href="#" class='sidebar-link'>
+                        <span class="iconify" data-icon="oi:credit-card"></span>
+                        <span>Footer</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item ">
+                            <a href="{{route('dash.footer.section')}}">Footer Section</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{route('dash.footer.link')}}">Footer Link</a>
                         </li>
                     </ul>
                 </li>

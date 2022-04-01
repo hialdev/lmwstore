@@ -42,7 +42,7 @@
                                     data-bs-target="#bayar">
                                     Bayar
                                 </button>
-                                <a href="" class="btn btn-success">Konfirmasi</a>
+                                <button wire:click="confirm({{$pesanan->id}})" class="mb-1 btn btn-success">Konfirmasi</button>
                             </td>
                         </tr>
                         @empty
@@ -75,7 +75,7 @@
                                     @forelse ($details as $detail)
                                     <div class="row align-items-center py-2 border-bottom">
                                         <div class="col-2">
-                                            <img src="{{json_decode($detail->product->image)[0]}}" alt="{{$detail->product->name}}" class="d-block" style="width:4em;height:4em;object-fit:cover">
+                                            <img src="{{asset('storage'.json_decode($detail->product->image)[0])}}" alt="{{$detail->product->name}}" class="d-block" style="width:4em;height:4em;object-fit:cover">
                                         </div>
                                         <div class="col-6">
                                             <strong>{{$detail->product->name}}</strong>
@@ -154,41 +154,23 @@
                                         <h1>{{Helper::rupiah($selected->sum_price)}}</h1>
                                         <p>Bayar sebelum :</p>
                                         <h5>{{$selected->created_at->addDays(1)->isoFormat('dddd, D MMM Y H:m:s')}}</h5>
-                                        <button wire:click="confirm" class="btn btn-primary">Konfirmasi Pembayaran</button>
+                                        <button wire:click="confirm({{$selected->id}})" class="btn btn-primary">Konfirmasi Pembayaran</button>
                                         <hr>
                                         <p>Rekening Pembayaran yang tersedia:</p>
                                         <div class="w-100 mx-auto my-4" style="max-width: 35em">
                                             <table class="table">
+                                                @foreach ($banks as $bank)
                                                 <tr>
                                                     <td>
-                                                        <img src="/assets/images/bank/bca-logo.jpg" alt="" class="d-block" style="max-height: 4em;">
+                                                        <img src="{{asset('storage'.$bank->logo)}}" alt="{{$bank->name}}" class="d-block" style="max-height: 4em;">
                                                     </td>
                                                     <td class="text-left">
-                                                        <h6 class="m-0">BCA</h6>
-                                                        <h4 class="m-0">8172398642</h4>
-                                                        <p>PT. Langgeng Makmur Wijaya</p>
+                                                        <h6 class="m-0">{{$bank->bank}}</h6>
+                                                        <h4 class="m-0">{{$bank->rek}}</h4>
+                                                        <p>{{$bank->name}}</p>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="/assets/images/bank/bni-logo.png" alt="" class="d-block" style="max-height: 4em;">
-                                                    </td>
-                                                    <td class="text-left">
-                                                        <h6 class="m-0">BNI</h6>
-                                                        <h4 class="m-0">8172398642</h4>
-                                                        <p>PT. Langgeng Makmur Wijaya</p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <img src="/assets/images/bank/bsi-logo.png" alt="" class="d-block" style="max-height: 4em;">
-                                                    </td>
-                                                    <td class="text-left">
-                                                        <h6 class="m-0">BSI</h6>
-                                                        <h4 class="m-0">8172398642</h4>
-                                                        <p>PT. Langgeng Makmur Wijaya</p>
-                                                    </td>
-                                                </tr>
+                                                @endforeach
                                             </table>
                                         </div>
                                     </div>

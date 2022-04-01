@@ -13,7 +13,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Transaction</h6>
-                                    <h6 class="font-extrabold mb-0">726</h6>
+                                    <h6 class="font-extrabold mb-0">{{$count['pesanan']}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Costumers</h6>
-                                    <h6 class="font-extrabold mb-0">183.000</h6>
+                                    <h6 class="font-extrabold mb-0">{{$count['costumers']}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Products</h6>
-                                    <h6 class="font-extrabold mb-0">80.000</h6>
+                                    <h6 class="font-extrabold mb-0">{{$count['products']}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <h6 class="text-muted font-semibold">Categories</h6>
-                                    <h6 class="font-extrabold mb-0">112</h6>
+                                    <h6 class="font-extrabold mb-0">{{$count['category']}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -126,6 +126,7 @@
                             <h4>Recent Mails</h4>
                         </div>
                         <div class="card-content pb-4">
+                            @forelse ($mails as $mail)
                             <div class="recent-message d-flex px-4 py-3">
                                 <div class="stats-icon bg-primary text-white">
                                     <span class="iconify" data-icon="uiw:mail" style="width:2em;height:2em"></span>
@@ -135,8 +136,11 @@
                                     <h6 class="text-muted mb-0">@johnducky</h6>
                                 </div>
                             </div>
+                            @empty
+                                <div class="text-center">Belum ada email</div>
+                            @endforelse
                             <div class="px-4">
-                                <button class='btn btn-block btn-xl btn-light-primary font-bold mt-3'>Lihat Semua</button>
+                                <button wire:click="moreEmail" class='btn btn-block btn-xl btn-light-primary font-bold mt-3'>Lihat Semua</button>
                             </div>
                         </div>
                     </a>

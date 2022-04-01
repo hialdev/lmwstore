@@ -60,7 +60,7 @@
                             }' wire:ignore.self>
                             @foreach ($data['data'] as $cart)
                                 <div class="d-flex border-right pr-4" style="gap:1em">
-                                    <img src="{{json_decode($cart->product->image)[0]}}" alt="{{$cart->product->name}}" style="width:5em;height:5em;display-block">
+                                    <img src="{{asset('storage'.json_decode($cart->product->image)[0])}}" alt="{{$cart->product->name}}" style="width:5em;height:5em;display-block">
                                     <div>
                                         <a class="text-dark" href="{{route('product.show',$cart->product->slug)}}">{{$cart->product->name}}</a>
                                         <div><strong>{{$cart->qty}} x {{Helper::rupiah($cart->product->price-$cart->product->price*$cart->product->discount/100)}}</strong> <span style="text-decoration:line-through">{{Helper::rupiah($cart->product->price)}}</span></div>

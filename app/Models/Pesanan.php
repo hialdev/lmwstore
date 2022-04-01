@@ -19,6 +19,11 @@ class Pesanan extends Model
         return $this->hasOne(Alamat::class,'id','id_alamat');
     }
 
+    public function details()
+    {
+        return $this->hasOne(PesananDetail::class,'id_pesanan');
+    }
+
     public static function detail($id)
     {
         return PesananDetail::where('id_pesanan',$id)->latest()->get();

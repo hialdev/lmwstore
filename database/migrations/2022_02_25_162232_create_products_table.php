@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->integer('id_brand');
             $table->integer('id_label')->nullable();
             $table->string('name');
-            $table->string('image');
+            $table->text('image');
             $table->string('brief');
             $table->integer('price');
             $table->integer('discount')->nullable()->default(0);
