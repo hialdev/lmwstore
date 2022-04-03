@@ -198,7 +198,7 @@
                 <div class="product">
                     <figure class="product-media">
                         <span class="product-label label-new" style="background-color: {{$product->label->bg_color}} !important">{{$product->label->name}}</span>
-                        @if ($product->discount !== null && $product->discount !== 0)
+                        @if ($product->discount !== 0 || $product->discount !== '0')
                             <span class="product-label label-new bg-primary">-{{$product->discount}}%</span>
                         @endif
                         <a href="{{route('product.show',$product->slug)}}">
