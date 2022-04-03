@@ -71,7 +71,7 @@
                     <div class="col-md-6">
                         <div class="product-details">
                             <h1 class="product-title">{{ $product->name }}</h1><!-- End .product-title -->
-                            @if ($product->preorder === 1)
+                            @if ($product->preorder)
                                 <div class="my-2"><span class="p-1 rounded px-2 text-white bg-success">Preorder</span></div>
                             @endif
                             <div class="product-price">

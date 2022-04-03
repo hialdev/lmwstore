@@ -37,6 +37,7 @@ use App\Http\Livewire\Page\OrderPending;
 use App\Http\Livewire\Page\ProductShow;
 use App\Http\Livewire\Page\Profile;
 use App\Http\Livewire\Page\Shop;
+use App\Http\Livewire\Sitemap;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,7 @@ Auth::routes();
 
 Route::get('/',Index::class)->name('home');
 Route::redirect('/home','/');
+Route::get('/sitemap', Sitemap::class)->name('sitemap');
 Route::get('/contact',Contact::class)->name('contact');
 Route::get('/faq',Faq::class)->name('faq');
 Route::get('/product',Shop::class)->name('product');

@@ -80,7 +80,7 @@
                                 @endforeach
                             </div><!-- End .product-cat -->
                             <h3 class="product-title"><a href="{{route('product.show',$product->slug)}}">{{$product->name}}</a></h3><!-- End .product-title -->
-                            @if ($product->preorder === 1)
+                            @if ($product->preorder)
                                 <div class="my-2"><span class="p-1 rounded px-2 text-white bg-success">Preorder</span></div>
                             @endif
                             <div class="product-price">
