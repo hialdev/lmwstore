@@ -61,7 +61,7 @@ class Index extends Component
             }
             $now = \Carbon\Carbon::now()->format('Y-m-d');
             $path = "/media/images/settings/logo/".$now;
-            $imageName = 'logo-'.md5($data['logo'].microtime().'.'.$data['logo']->extension());
+            $imageName = 'logo-'.md5($data['logo'].microtime()).'.'.$data['logo']->extension();
             Storage::putFileAs(
                 'public'.$path,$data['logo'],$imageName
             );

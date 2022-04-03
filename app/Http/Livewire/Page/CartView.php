@@ -87,7 +87,13 @@ class CartView extends Component
     public function addQty($id)
     {
         $cart = Cart::find($id);
-        $cart->update(['qty'=>$cart->qty+1]);
+        if($cart->qty < $cart->product->stock){
+            $qty = $cart->qty+1;
+        }else{
+            $qty = $cart->qty;
+            session()->flash('failed','Tidak bisa menambah qty, qty memenuhi stock yang tersedia.');
+        }
+        $cart->update(['qty'=>$qty]);
 
         $this->emit('updateCart');
     }

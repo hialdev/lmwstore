@@ -3,15 +3,18 @@
 namespace App\Http\Livewire\Page;
 
 use App\Models\Alamat;
+use App\Models\Bank;
 use App\Models\Cart;
 use App\Models\Coupon;
 use App\Models\Page;
 use App\Models\Pesanan;
 use App\Models\PesananDetail;
 use App\Models\Setting;
+use App\Models\User;
 use Artesaos\SEOTools\Facades\SEOTools;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 
@@ -24,6 +27,9 @@ class Checkout extends Component
     ];
     public function boot()
     {
+        if ( Auth::id() === null || Cart::where('id_user',Auth::id())->first() === null) {
+            redirect()->route('product');
+        }
         $this->coupon();
         $this->seo();
         $alm = Alamat::where('id_user',Auth::user()->id)->latest()->take(1)->first();
@@ -169,11 +175,22 @@ class Checkout extends Component
                     'qty' => $cart->qty,
                 ]);
             }
-            Cart::where('id_user',Auth::user()->id)->delete();
-
+            
             session()->put('kode_pesanan',$inv);
-
-            redirect()->route('invoice');
+            
+            $data = [
+                'pesanan' => $pdtl,
+                'banks' => Bank::all(),
+                'setting' => Setting::all()->keyBy('key'),
+                'cpn' => session()->get('coupon') !== null ? Coupon::where('code',session()->get('coupon'))->first() : null,
+            ];
+            $receiver = [User::findOrFail(Auth::id())->email,Setting::where('key','webmail')->first()->content];
+            foreach ($receiver as $r) {
+                Mail::to($r)->send(new \App\Mail\OrderMail($data));
+            }
+            
+            Cart::where('id_user',Auth::user()->id)->delete();
+            redirect()->route('invoice')->with('success','Pesanan Berhasil dibuat, Email pesanan dikirim ke '.$receiver[0].'.');
         }
     }
 }

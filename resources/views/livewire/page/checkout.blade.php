@@ -178,7 +178,7 @@
                                     <span class="btn-text">Place Order</span>
                                     <span class="btn-hover-text">Bayar Sekarang</span>
                                 </button>
-                            
+                                <div wire:loading wire:target="order">Sedang Membuat Pesanan dan Mengirimkan Email...</div>
                             </div><!-- End .summary -->
                         </aside><!-- End .col-lg-3 -->
                     </div><!-- End .row -->

@@ -49,7 +49,7 @@
                     </div><!-- End .text-center -->
                     @if (session()->has('failed'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{  session('failed') }}<a href="{{route('cart')}}" class="btn-primary p-3 ml-3">Lihat keranjang</a>
+                        {{  session('failed') }}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -96,6 +96,7 @@
                                 <span>SUBMIT</span>
                                 <i class="icon-long-arrow-right"></i>
                             </button>
+                            <div wire:loading wire:target="sendEmail">Sedang mengirimkan email...</div>
                         </div><!-- End .text-center -->
                     </form><!-- End .contact-form -->
                 </div><!-- End .col-md-9 col-lg-7 -->

@@ -81,9 +81,9 @@ class Index extends Component
         $this->image = null;
         $this->editModal = true;
         $bank = Bank::findOrFail($id);
-        $this->name = $bank->name;
-        $this->rek = $bank->rek;
         $this->bank = $bank->bank;
+        $this->rek = $bank->rek;
+        $this->name = $bank->name;
         $this->imgedit = $bank->logo;
         $this->selectId = $bank->id;
     }

@@ -89,8 +89,8 @@
                             @error('image') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group mb-3">
-                            <label for="inputRek">No Rek</label>
-                            <input wire:model="rek" type="number" class="form-control" id="inputRek">
+                            <label for="inputRekAdd">No Rek</label>
+                            <input wire:model="rek" type="number" class="form-control" id="inputRekAdd">
                             @error('rek') <span class="text-danger error">{{ $message }}</span>@enderror
                         </div>
                         <div class="form-group mb-3">

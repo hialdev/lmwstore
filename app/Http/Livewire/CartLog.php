@@ -64,7 +64,8 @@ class CartLog extends Component
     public function addQty($id)
     {
         $cart = Cart::find($id);
-        $cart->update(['qty'=>$cart->qty+1]);
+        $qty = $cart->qty < $cart->product->stock ? $cart->qty+1 : $cart->qty;
+        $cart->update(['qty' => $qty]);
 
         $this->emit('updateCart');
     }

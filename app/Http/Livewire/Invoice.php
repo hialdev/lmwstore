@@ -17,13 +17,16 @@ class Invoice extends Component
     public function boot()
     {
         $p = Pesanan::where('kode_pesanan',session()->get('kode_pesanan'))->first();
+        if ( Auth::id() === null || $p->details === null) {
+            redirect()->route('product');
+        }
         SEOTools::setTitle('Invoice - '.session()->get('kode_pesanan'));
         SEOTools::setDescription('Transaksi dengan Invoice '.session()->get('kode_pesanan'));
         SEOTools::opengraph()->setUrl(Request::url());
         SEOTools::setCanonical(Request::url());
         SEOTools::opengraph()->addProperty('type', 'page');
         SEOTools::twitter()->setSite('Invoice - '.session()->get('kode_pesanan'));
-        SEOTools::jsonLd()->addImage(asset('storage'.json_decode($p->details->product->image)[0]));
+        SEOTools::jsonLd()->addImage(asset('storage'.json_decode($p->details[0]->product->image)[0]));
     }
 
     public function render()

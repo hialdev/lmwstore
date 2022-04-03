@@ -117,7 +117,7 @@ class Add extends Component
             
             //Store and make dataimage
             foreach ($this->images as $key => $image) {
-                $imageName = md5($this->images[$key].microtime().'.'.$image->extension());
+                $imageName = md5($this->images[$key].microtime()).'.'.$image->extension();
                 Storage::putFileAs(
                     'public'.$path,$this->images[$key],$imageName
                 );
