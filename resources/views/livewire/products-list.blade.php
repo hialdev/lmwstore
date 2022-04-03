@@ -10,7 +10,9 @@
                 <div class="product">
                     <figure class="product-media">
                         <span class="product-label label-new" style="background-color: {{$product->label->bg_color}} !important">{{$product->label->name}}</span>
-                        @if ($product->discount !== 0 || $product->discount !== '0')
+                        @if ($product->discount === 0 || $product->discount === '0')
+                            <span></span>
+                        @else
                             <span class="product-label label-new bg-primary">-{{$product->discount}}%</span>
                         @endif
                         <a href="{{route('product.show',$product->slug)}}">
@@ -26,6 +28,9 @@
                             @endforeach
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="{{route('product.show',$product->slug)}}">{{$product->name}}</a></h3><!-- End .product-title -->
+                        @if ($product->preorder === 1)
+                            <div class="my-2"><span class="p-1 rounded px-2 text-white bg-success">Preorder</span></div>
+                        @endif
                         <div class="product-price">
                             <span class="new-price">{{Helper::rupiah(($product->discount !== 0 && $product->discount !== null) ? $product->price - $product->price*$product->discount/100 : $product->price)}}</span>
                             @if ($product->discount !== 0 && $product->discount !== null)
